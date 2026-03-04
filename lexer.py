@@ -219,11 +219,6 @@ class Lexer:
         return self.source[self.pos - 1] if self.pos > 0 else ""
 
     @property
-    def next_next_char(self) -> str:
-        """下下个字符"""
-        return self.source[self.pos + 2] if self.pos < len(self.source) - 2 else ""
-
-    @property
     def current_lexeme(self) -> str:
         return self.source[self.token_start_pos : self.pos]
 
