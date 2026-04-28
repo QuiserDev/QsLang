@@ -1,10 +1,10 @@
 // Correct lexer test: covers all token types and constructs
-func factorial(n: Int) -> Int:
+func factorial(n: int) -> int:
     if n <= 1:
         return 1;
     return n * factorial(n - 1);
 
-func isPrime(n: Int) -> Bool:
+func isPrime(n: int) -> bool:
     if n < 2:
         return false;
     var i = 2;
@@ -14,7 +14,7 @@ func isPrime(n: Int) -> Bool:
         i = i + 1;
     return true;
 
-func processFile(filename: String):
+func processFile(filename: str):
     var f = open(filename, "r");
     if f == null:
         print("无法打开文件: ", filename);
@@ -29,7 +29,7 @@ func processFile(filename: String):
 
     f.close();
 
-func copyFile(src: String, dst: String):
+func copyFile(src: str, dst: str):
     var srcFile = open(src, "rb");
     var dstFile = open(dst, "wb");
 
@@ -37,7 +37,7 @@ func copyFile(src: String, dst: String):
         print("文件打开失败");
         return;
 
-    var buffer: Bytes;
+    var buffer: bytes;
     var total = 0;
     while true:
         buffer = srcFile.read_bytes(4096);
@@ -91,7 +91,7 @@ func main():
     var b3 = bytes_concat(b1, b2);
     print("Length: " + str(b3.len()));
 
-    var f: File = null;
+    var f: file = null;
 
 /* 多行注释
    演示：无嵌套
