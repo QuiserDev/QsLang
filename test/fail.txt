@@ -1,0 +1,70 @@
+// Lexer error test: 涵盖多种上下文中的词法错误
+
+// 1. 函数定义中的非法字符（参数列表）
+func bad&char(a: Int) -> Int:    // Error: 非法字符 '&' 在标识符位置
+    return a;
+
+// 2. 非法数字格式（浮点数缺少小数部分）
+func floatError() -> Float:
+    var x = 3.;                   // Error: 浮点数缺少小数部分
+    return x;
+
+// 3. 非法数字格式（浮点数缺少整数部分）
+    var y = .14;                 // Error: 浮点数缺少整数部分
+
+// 4. 未闭合的字符串（跨行）
+func unclosedString():
+    var msg = "This string
+    never ends;                 // Error: 未闭合的字符串字面量
+
+// 5. 非法转义序列
+func badEscape():
+    var s = "hello\xworld";     // Error: 未知转义序列 \x
+    var t = "test\";            // Error: 独立的反斜杠，未转义 "
+
+// 6. 十六进制数字错误（非法十六进制字符、不完整）
+func hexError():
+    var h1 = 0xGHI;              // Error: G, H, I 不是十六进制数字
+    var h2 = 0x;                 // Error: 0x 后无数字
+
+// 7. 非法字符出现在表达式中
+func illegalChar():
+    var x = 10 @ 5;             // Error: 非法字符 '@'
+
+// 8. 标识符以数字开头
+func testIdent():
+    var 2bad = 5;               // Error: 标识符不能以数字开头
+
+// 9. 条件语句中的未闭合块注释（导致剩余代码被吞）
+func badComment():
+    var a = 1;
+    /* 这是一个未闭合的多行注释
+    var b = 2;
+    // 直到文件结束也没有闭合，词法分析器会报错或吞掉剩余 token
+
+// 10. 循环中的非法字符
+    while true:
+        var c = 3;
+        continue @;             // Error: 非法字符 '@'
+        break;
+
+// 11. for 循环集合表达式中的非法数字
+func forError():
+    var arr = [1, 2, 3];
+    for var n in arr:
+        var x = 0o77;           // Error: 不支持的八进制前缀（仅十进制和十六进制）
+        print(n);
+
+// 12. 数组字面量中的非法字符
+    var mixed = [1, 2, $];      // Error: 非法字符 '$'
+
+// 13. 文件操作中的非法转义
+    var filename = "C:\new\file.txt";  // Error: \n 被解释为换行，\f 为换页，字符串内容非预期，且\f可能被当作非法转义？
+    // 实际上 \f 不是合法转义，因此触发错误
+
+// 14. 错误使用单引号字符字面量（不支持）
+    var ch = 'x';               // Error: 单引号字符字面量不支持
+
+// 15. 函数返回类型处非法字符
+func returnError() -> Int@:     // Error: 返回类型标注中出现 '@'
+    return 0;

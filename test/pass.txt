@@ -1,0 +1,101 @@
+// Correct lexer test: covers all token types and constructs
+func factorial(n: Int) -> Int:
+    if n <= 1:
+        return 1;
+    return n * factorial(n - 1);
+
+func isPrime(n: Int) -> Bool:
+    if n < 2:
+        return false;
+    var i = 2;
+    while i * i <= n:
+        if n % i == 0:
+            return false;
+        i = i + 1;
+    return true;
+
+func processFile(filename: String):
+    var f = open(filename, "r");
+    if f == null:
+        print("无法打开文件: ", filename);
+        return;
+
+    var lineNum = 1;
+    var line = f.readline();
+    while line != null:
+        print("第 ", str(lineNum), " 行: ", line);
+        line = f.readline();
+        lineNum = lineNum + 1;
+
+    f.close();
+
+func copyFile(src: String, dst: String):
+    var srcFile = open(src, "rb");
+    var dstFile = open(dst, "wb");
+
+    if srcFile == null || dstFile == null:
+        print("文件打开失败");
+        return;
+
+    var buffer: Bytes;
+    var total = 0;
+    while true:
+        buffer = srcFile.read_bytes(4096);
+        if buffer.len() == 0:
+            break;
+        dstFile.write_bytes(buffer);
+        total = total + buffer.len();
+
+    srcFile.close();
+    dstFile.close();
+    print("复制完成，共 ", str(total), " 字节");
+
+func main():
+    print("QsLang 程序示例");
+
+    var numbers = [2, 3, 5, 7, 11, 13];
+    for var n in numbers:
+        if isPrime(n):
+            print(str(n) + " 是素数");
+
+    var greeting = "Hello";
+    for var ch in greeting:
+        print("字符: " + ch);
+
+    var a = 5;
+    var b = 3.14;
+    var c = a + b;
+    print("c = " + str(c));
+
+    var arr1 = [1, 2, 3];
+    var arr2 = [4, 5, 6];
+    var arr3 = arr1 + arr2;
+
+    var s1 = "Hello";
+    var s2 = "World";
+    var s3 = s1 + " " + s2;
+
+    var x = 10;
+    if true:
+        var x = "hello";
+        print(x);
+
+    var b1 = bytes("Hello");
+    var hex = b1.hex();
+    print("Hex: " + hex);
+
+    var b2 = bytes_from_array([72, 101, 108, 108, 111]);
+    var first = b2[0];
+    print("First byte: " + str(first));
+
+    var b3 = bytes_concat(b1, b2);
+    print("Length: " + str(b3.len()));
+
+    var f: File = null;
+
+/* 多行注释
+   演示：无嵌套
+*/
+    var mask = 0xFF & 0x0F;
+    var flag = true && false || !false;
+    var check = a == 5 && b != 0.0;
