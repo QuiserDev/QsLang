@@ -201,10 +201,9 @@ FunctionDecl = "func", identifier, "(", [ ParameterList ], ")", [ "->", Type ], 
 执行入口是名为 `main` 的函数：
 
 ```python
-func
-main():
+func main():
 # 程序从这里开始执行
-pass
+    pass
 ```
 
 ### 4.2 语句
@@ -392,50 +391,41 @@ Parameter = identifier, ":", Type, [ "=", Expression ] ;
 #### 输出函数
 
 ```python
-func
-print(*values: Any, sep: String = " ", end: String = "\n") -> Void
-# 用法：print("hello", "world", sep=", ")
+func print(*values: Any, sep: String = " ", end: String = "\n") -> Void:
+    # 用法：print("hello", "world", sep=", ")
+    ...
 ```
 
 #### 输入函数
 
 ```python
-func
-input(prompt: String = "") -> String
-# 用法：name = input("请输入姓名：")
+func input(prompt: String = "") -> String:
+    # 用法：name = input("请输入姓名：")
+    ...
 ```
 
 #### 类型转换函数
 
 ```python
-func
-int(x: Any) -> Int  # 类似 Python 的 int()
-func
-float(x: Any) -> Float  # 类似 Python 的 float()
-func
-str(x: Any) -> String  # 类似 Python 的 str()
-func
-bool(x: Any) -> Bool  # 类似 Python 的 bool()
+func int(x: Any) -> Int  # 类似 Python 的 int()
+func float(x: Any) -> Float  # 类似 Python 的 float()
+func str(x: Any) -> String  # 类似 Python 的 str()
+func bool(x: Any) -> Bool  # 类似 Python 的 bool()
 ```
 
 #### 工具函数
 
 ```python
-func
-len(s: String) -> Int  # 字符串长度
-func
-len(arr: [Type]) -> Int  # 数组长度
-func
-len(b: Bytes) -> Int  # 字节序列长度
-func
-type(x: Any) -> String  # 返回类型名称
+func len(s: String) -> Int  # 字符串长度
+func len(arr: [Type]) -> Int  # 数组长度
+func len(b: Bytes) -> Int  # 字节序列长度
+func type(x: Any) -> String  # 返回类型名称
 ```
 
 ### 6.2 文件操作
 
 ```python
-func
-open(filename: String, mode: String = "r") -> File
+func open(filename: String, mode: String = "r") -> File
 # mode: "r" 读文本, "w" 写文本, "rb" 读二进制, "wb" 写二进制
 ```
 
@@ -456,12 +446,9 @@ open(filename: String, mode: String = "r") -> File
 **文件属性函数**：
 
 ```python
-func
-file_name(f: File) -> String  # 获取文件名
-func
-file_mode(f: File) -> String  # 获取打开模式
-func
-file_closed(f: File) -> Bool  # 检查文件是否已关闭
+func file_name(f: File) -> String  # 获取文件名
+func file_mode(f: File) -> String  # 获取打开模式
+func file_closed(f: File) -> Bool  # 检查文件是否已关闭
 ```
 
 ### 6.3 Bytes 类型
@@ -469,12 +456,9 @@ file_closed(f: File) -> Bool  # 检查文件是否已关闭
 **Bytes 创建函数**：
 
 ```python
-func
-bytes(s: String) -> Bytes  # 字符串编码为字节
-func
-bytes_from_int(i: Int) -> Bytes  # 整数转为字节（大端序）
-func
-bytes_from_array(arr: [Int]) -> Bytes  # 数组转为字节（值需在 0-255）
+func bytes(s: String) -> Bytes  # 字符串编码为字节
+func bytes_from_int(i: Int) -> Bytes  # 整数转为字节（大端序）
+func bytes_from_array(arr: [Int]) -> Bytes  # 数组转为字节（值需在 0-255）
 ```
 
 **Bytes 方法**（实际转换为函数调用）：
@@ -488,18 +472,12 @@ bytes_from_array(arr: [Int]) -> Bytes  # 数组转为字节（值需在 0-255）
 **Bytes 操作函数**：
 
 ```python
-func
-bytes_len(b: Bytes) -> Int
-func
-bytes_hex(b: Bytes) -> String
-func
-bytes_decode(b: Bytes, encoding: String = "utf-8") -> String
-func
-bytes_slice(b: Bytes, start: Int, end: Int) -> Bytes
-func
-bytes_get(b: Bytes, index: Int) -> Int
-func
-bytes_concat(a: Bytes, b: Bytes) -> Bytes
+func bytes_len(b: Bytes) -> Int
+func bytes_hex(b: Bytes) -> String
+func bytes_decode(b: Bytes, encoding: String = "utf-8") -> String
+func bytes_slice(b: Bytes, start: Int, end: Int) -> Bytes
+func bytes_get(b: Bytes, index: Int) -> Int
+func bytes_concat(a: Bytes, b: Bytes) -> Bytes
 ```
 
 ### 6.4 错误处理
@@ -517,157 +495,123 @@ bytes_concat(a: Bytes, b: Bytes) -> Bytes
 
 ```python
 # 计算阶乘
-func
-factorial(n: Int) -> Int:
-if n <= 1:
-    return 1
+func factorial(n: Int) -> Int:
+    if n <= 1:
+        return 1
 
-return n * factorial(n - 1)
+    return n * factorial(n - 1)
 
 # 判断素数
-func
-isPrime(n: Int) -> Bool:
-if n < 2:
-    return False
-
-var
-i = 2
-while i * i <= n:
-    if n % i == 0:
+func isPrime(n: Int) -> Bool:
+    if n < 2:
         return False
 
-    i = i + 1
-
-return True
+    var i = 2
+    while i * i <= n:
+        if n % i == 0:
+            return False
+        i = i + 1
+   
+    return True
 
 # 文件处理示例（使用方法调用语法）
-func
-processFile(filename: String):
-var
-f = open(filename, "r")
-if f == null:
-    print("无法打开文件: ", filename)
-    return
-
-var
-lineNum = 1
-var
-line = f.readline()
-while line != null:
-    print("第 ", str(lineNum), " 行: ", line)
-    line = f.readline()
-    lineNum = lineNum + 1
-
-f.close()
+func processFile(filename: String):
+    var f = open(filename, "r")
+    if f == null:
+        print("无法打开文件: ", filename)
+        return
+    
+    var lineNum = 1
+    var line = f.readline()
+    while line != null:
+        print("第 ", str(lineNum), " 行: ", line)
+        line = f.readline()
+        lineNum = lineNum + 1
+    
+    f.close()
 
 # 二进制文件复制
-func
-copyFile(src: String, dst: String):
-var
-srcFile = open(src, "rb")
-var
-dstFile = open(dst, "wb")
-
-if srcFile == null or dstFile == null:
-    print("文件打开失败")
-    return
-
-var
-buffer: Bytes
-var
-total = 0
-while True:
-    buffer = srcFile.read_bytes(4096)
-    if buffer.len() == 0:
-        break
-
-    dstFile.write_bytes(buffer)
-    total = total + buffer.len()
-
-srcFile.close()
-dstFile.close()
-print("复制完成，共 ", str(total), " 字节")
+func copyFile(src: String, dst: String):
+    var srcFile = open(src, "rb")
+    var dstFile = open(dst, "wb")
+    
+    if srcFile == null or dstFile == null:
+        print("文件打开失败")
+        return
+    
+    var buffer: Bytes
+    var total = 0
+    while True:
+        buffer = srcFile.read_bytes(4096)
+        if buffer.len() == 0:
+            break
+    
+        dstFile.write_bytes(buffer)
+        total = total + buffer.len()
+    
+    srcFile.close()
+    dstFile.close()
+    print("复制完成，共 ", str(total), " 字节")
 
 # 主函数
-func
-main():
-print("QsLang 程序示例")
+func main():
+    print("QsLang 程序示例")
 
-# 数组和 foreach（类型推导）
-var
-numbers = [2, 3, 5, 7, 11, 13]  # 推导为 [Int]
-for var n in numbers:  # n 推导为 Int
-    if isPrime(n):
-        print(str(n) + " 是素数")
-
-# 字符串遍历（参考Python：每个字符是字符串）
-var
-greeting = "Hello"  # 推导为 String
-for var ch in greeting:  # ch 推导为 String（单字符）
-    print("字符: " + ch)
-
-# 数值运算（Int 和 Float 混合）
-var
-a = 5  # Int
-var
-b = 3.14  # Float
-var
-c = a + b  # Float: 8.14
-print("c = " + str(c))
-
-# 数组拼接（参考Python）
-var
-arr1 = [1, 2, 3]
-var
-arr2 = [4, 5, 6]
-var
-arr3 = arr1 + arr2  # [1, 2, 3, 4, 5, 6]
-
-# 字符串拼接（参考Python）
-var
-s1 = "Hello"
-var
-s2 = "World"
-var
-s3 = s1 + " " + s2  # "Hello World"
-
-# 变量遮蔽（产生警告）
-var
-x = 10
-if True:
-    var
-    x = "hello"  # 警告：变量 x 遮蔽了外层变量
-    print(x)  # 输出 "hello"
-
-# Bytes 示例
-var
-b1 = bytes("Hello")
-var
-hex = b1.hex()  # 方法调用语法糖 → "48656c6c6f"
-print("Hex: " + hex)
-
-var
-b2 = bytes_from_array([72, 101, 108, 108, 111])
-var
-first = b2[0]  # 索引运算符 → 72
-print("First byte: " + str(first))
-
-var
-b3 = bytes_concat(b1, b2)
-print("Length: " + str(b3.len()))
+    # 数组和 foreach（类型推导）
+    var numbers = [2, 3, 5, 7, 11, 13]  # 推导为 [Int]
+    for var n in numbers:  # n 推导为 Int
+        if isPrime(n):
+            print(str(n) + " 是素数")
+    
+    # 字符串遍历（参考Python：每个字符是字符串）
+    var greeting = "Hello"  # 推导为 String
+    for var ch in greeting:  # ch 推导为 String（单字符）
+        print("字符: " + ch)
+    
+    # 数值运算（Int 和 Float 混合）
+    var a = 5  # Int
+    var b = 3.14  # Float
+    var c = a + b  # Float: 8.14
+    print("c = " + str(c))
+    
+    # 数组拼接（参考Python）
+    var arr1 = [1, 2, 3]
+    var arr2 = [4, 5, 6]
+    var arr3 = arr1 + arr2  # [1, 2, 3, 4, 5, 6]
+    
+    # 字符串拼接（参考Python）
+    var s1 = "Hello"
+    var s2 = "World"
+    var s3 = s1 + " " + s2  # "Hello World"
+    
+    # 变量遮蔽（产生警告）
+    var x = 10
+    if True:
+        var x = "hello"  # 警告：变量 x 遮蔽了外层变量
+        print(x)  # 输出 "hello"
+    
+    # Bytes 示例
+    var b1 = bytes("Hello")
+    var hex = b1.hex()  # 方法调用语法糖 → "48656c6c6f"
+    print("Hex: " + hex)
+    
+    var b2 = bytes_from_array([72, 101, 108, 108, 111])
+    var first = b2[0]  # 索引运算符 → 72
+    print("First byte: " + str(first))
+    
+    var b3 = bytes_concat(b1, b2)
+    print("Length: " + str(b3.len()))
 
 # 参数默认值示例（参考Python：定义时求值）
-func
-demo(value: Int = random()):
-print(value)
-
-demo()  # 输出 42
-demo()  # 也输出 42（相同的值）
-
-# null 必须显式类型
-var
-f: File = null  # 正确
-# var g = null          # 错误：无法推导
+func demo(value: Int = random()):
+    print(value)
+    
+    demo()  # 输出 42
+    demo()  # 也输出 42（相同的值）
+    
+    # null 必须显式类型
+    var f: File = null  # 正确
+    # var g = null          # 错误：无法推导
 ```
 
 ---
@@ -722,8 +666,7 @@ def typeCheckForStmt(forNode):
 
 
 # break/continue 检查
-var
-loopStack = []
+var loopStack = []
 
 
 def checkBreak():
