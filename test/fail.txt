@@ -1,7 +1,7 @@
 // Lexer error test: 涵盖多种上下文中的词法错误
 
 // 1. 函数定义中的非法字符（参数列表）
-func bad&char(a: int) -> int:    // Error: 非法字符 '&' 在标识符位置
+func bad&char(a: int) -> int:    // Error: 非法字符 '&' 在标识符位置  # 词法分析不识别，语法分析识别
     return a;
 
 // 2. 非法数字格式（浮点数缺少小数部分）
@@ -10,7 +10,7 @@ func floatError() -> float:
     return x;
 
 // 3. 非法数字格式（浮点数缺少整数部分）
-    var y = .14;                 // Error: 浮点数缺少整数部分
+    var y = .14;                 // Error: 浮点数缺少整数部分    # 词法分析不识别，语法分析识别
 
 // 4. 未闭合的字符串（跨行）
 func unclosedString():

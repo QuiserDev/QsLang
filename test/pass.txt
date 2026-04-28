@@ -96,6 +96,5 @@ func main():
 /* 多行注释
    演示：无嵌套
 */
-    var mask = 0xFF & 0x0F;
     var flag = true && false || !false;
     var check = a == 5 && b != 0.0;

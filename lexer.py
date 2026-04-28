@@ -229,7 +229,7 @@ class Lexer:
             elif self.current_char.isdigit():
                 self.handle_number()
             elif self.current_char.isalpha() or self.current_char == "_":
-                self.handle_alpha()
+                self.handle_identifier()
             elif self.current_char in self.SINGLE_CHAR_TOKENS:
                 self.handle_symbol()
             elif self.current_char == '"':
@@ -292,7 +292,7 @@ class Lexer:
         self.add_token(TokenType.FLOAT if is_float else TokenType.INTEGER)
 
     @reset_lexeme
-    def handle_alpha(self):
+    def handle_identifier(self):
         """从当前字符开始，读取一个关键字或变量"""
 
         self.advance()  # 第一个字符直接读取，后续字符可以为数字需要处理
@@ -362,3 +362,17 @@ class Lexer:
             )
         self.advance()  # 末尾引号
         self.add_token(TokenType.STRING)
+
+if __name__ == '__main__':
+    with open("test/pass.txt", 'r', encoding='utf-8') as f:
+        source = f.read()
+    lexer = Lexer(source)
+    lexer.run()
+
+    print('*'*10)
+
+    with open("test/fail.txt", 'r', encoding='utf-8') as f:
+        source = f.read()
+    lexer = Lexer(source)
+    lexer.run()
+    s = " a a a \" # aaa "
